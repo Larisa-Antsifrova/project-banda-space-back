@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const { Authors } = require("../helpers/authors");
-const db = require("../db/mongo-db");
 
 const entrySchema = new Schema(
   {
@@ -20,8 +19,6 @@ const entrySchema = new Schema(
     },
   }
 );
-
-console.log(db);
 
 const Entry = model("entry", entrySchema);
 
