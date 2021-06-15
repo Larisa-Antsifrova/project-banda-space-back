@@ -3,12 +3,23 @@ const { HttpCodes, Statuses } = require("../helpers/constants");
 
 const getAllEntries = async (req, res, next) => {
   try {
-    const allEntries = await Entry.find();
+    const { author = null, limit = 5, offset = 0 } = req.query;
+
+    const searchOptions = {};
+
+    if (author !== null) {
+      searchOptions.author = author;
+    }
+
+    const { docs: allEntries, ...rest } = await Entry.paginate(searchOptions, {
+      limit,
+      offset,
+    });
 
     return res.status(HttpCodes.OK).json({
       status: Statuses.success,
       code: HttpCodes.OK,
-      data: { entries: allEntries },
+      data: { entries: allEntries, ...rest },
     });
   } catch (error) {
     next(error);

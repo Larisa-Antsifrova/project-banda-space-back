@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 const { Authors } = require("../helpers/authors");
 
 const entrySchema = new Schema(
@@ -19,6 +20,8 @@ const entrySchema = new Schema(
     },
   }
 );
+
+entrySchema.plugin(mongoosePaginate);
 
 const Entry = model("entry", entrySchema);
 
