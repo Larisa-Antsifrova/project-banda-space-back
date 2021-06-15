@@ -1,24 +1,13 @@
-const express = require('express')
-const router = express.Router()
+const { Router } = require("express");
+const entriesRouter = Router();
+const EntriesControllers = require("../controllers/entries-controllers");
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+entriesRouter.get("/", EntriesControllers.getAllEntries);
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+entriesRouter.post("/", EntriesControllers.addEntry);
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+entriesRouter.patch("/:entryId", EntriesControllers.editEntry);
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+entriesRouter.delete("/:entryId", EntriesControllers.removeEntry);
 
-router.patch('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-module.exports = router
+module.exports = entriesRouter;

@@ -11,11 +11,18 @@ const HttpCodes = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+const Statuses = {
+  success: 'success',
+  error: 'error',
+  fail: 'fail',
+};
+
 const Port = {
   default: 3000,
 };
 
 module.exports = {
   HttpCodes,
+  Statuses,
   Port,
 };
