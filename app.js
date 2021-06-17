@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const logger = require("morgan");
 const cors = require("cors");
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const boolParser = require("express-query-boolean");
 const entriesRouter = require("./routes/entries-router");
 const { HttpCodes, Statuses } = require("./helpers/constants");
@@ -18,9 +18,9 @@ app.use(cors());
 app.use(express.json({ limit: Limiter.JSON }));
 app.use(boolParser());
 
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 
-app.use("/entries", rateLimit(Limiter.rateLimit), entriesRouter);
+app.use("/entries", entriesRouter);
 
 app.use((req, res) => {
   res.status(HttpCodes.NOT_FOUND).json({ message: "Not found" });
