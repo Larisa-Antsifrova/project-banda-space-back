@@ -3,16 +3,16 @@ const { HttpCodes } = require("../helpers/constants");
 const { Authors } = require("../helpers/authors");
 
 const validateAddEntry = Joi.object({
-  word: Joi.string().trim().min(2).max(50).required(),
-  description: Joi.string().min(2).max(200).required(),
+  word: Joi.string().trim().min(2).max(100).required(),
+  description: Joi.string().min(2).max(100).required(),
   author: Joi.string()
     .valid(...Authors)
     .required(),
 });
 
 const validateEditEntry = Joi.object({
-  word: Joi.string().trim().min(2).max(50).optional(),
-  description: Joi.string().min(2).max(200).optional(),
+  word: Joi.string().trim().min(2).max(100).optional(),
+  description: Joi.string().min(2).max(100).optional(),
   author: Joi.string()
     .valid(...Authors)
     .optional(),

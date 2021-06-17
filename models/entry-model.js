@@ -7,6 +7,7 @@ const entrySchema = new Schema(
     word: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     author: { type: String, required: true, enum: Authors },
+    deleted: { type: Boolean, default: false },
   },
   {
     versionKey: false,
@@ -15,6 +16,7 @@ const entrySchema = new Schema(
       virtuals: true,
       transform: function (doc, ret) {
         delete ret._id;
+        delete ret.deleted;
         return ret;
       },
     },

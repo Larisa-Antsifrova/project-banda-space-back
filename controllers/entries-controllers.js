@@ -5,7 +5,7 @@ const getAllEntries = async (req, res, next) => {
   try {
     const { author = null, limit = 5, offset = 0 } = req.query;
 
-    const searchOptions = {};
+    const searchOptions = { deleted: false };
 
     if (author !== null) {
       searchOptions.author = author;
@@ -58,10 +58,18 @@ const editEntry = async (req, res, next) => {
     const entryUpdates = req.body;
 
     const updatedEntry = await Entry.findOneAndUpdate(
-      { _id: entryId },
+      { _id: entryId, deleted: false },
       { ...entryUpdates },
       { new: true }
     );
+
+    if (!updatedEntry) {
+      return res.status(HttpCodes.NOT_FOUND).json({
+        status: Statuses.error,
+        code: HttpCodes.NOT_FOUND,
+        message: "Entry does not exist.",
+      });
+    }
 
     return res.status(HttpCodes.OK).json({
       status: Statuses.success,
@@ -77,7 +85,11 @@ const removeEntry = async (req, res, next) => {
   try {
     const entryId = req.params.entryId;
 
-    const deletedEntry = await Entry.findOneAndDelete({ _id: entryId });
+    const deletedEntry = await Entry.findOneAndUpdate(
+      { _id: entryId },
+      { ...{ deleted: true } },
+      { new: true }
+    );
 
     if (!deletedEntry) {
       return res.status(HttpCodes.NOT_FOUND).json({
