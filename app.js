@@ -18,6 +18,8 @@ app.use(cors());
 app.use(express.json({ limit: Limiter.JSON }));
 app.use(boolParser());
 
+app.set("trust proxy", 1);
+
 app.use("/entries", rateLimit(Limiter.rateLimit), entriesRouter);
 
 app.use((req, res) => {
