@@ -1,4 +1,5 @@
 const Entry = require("../models/entry-model");
+const db = require("../db/mongo-db");
 const { HttpCodes, Statuses } = require("../helpers/constants");
 
 const getAllEntries = async (req, res, next) => {
@@ -10,7 +11,7 @@ const getAllEntries = async (req, res, next) => {
     if (author !== null) {
       searchOptions.author = author;
     }
-
+    await db;
     const { docs: allEntries, ...rest } = await Entry.paginate(searchOptions, {
       limit,
       offset,

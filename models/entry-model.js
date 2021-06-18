@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
-const db = require("../db/mongo-db");
 const { Authors } = require("../helpers/authors");
 
 const entrySchema = new Schema(
