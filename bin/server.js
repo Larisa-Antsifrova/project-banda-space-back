@@ -5,10 +5,7 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || Port.default;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await db;
   console.log(`Server running on port: ${PORT}`);
-});
-
-db.then(() => {
-  console.log("Mongo DB connected.");
 });
