@@ -4,7 +4,7 @@ const { Authors } = require("../helpers/authors");
 
 const entrySchema = new Schema(
   {
-    word: { type: String, required: true, unique: true },
+    word: { type: String, required: true },
     description: { type: String, required: true },
     author: { type: String, required: true, enum: Authors },
     deleted: { type: Boolean, default: false },

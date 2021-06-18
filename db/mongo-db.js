@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const MONGO_CONNECTION_DEV = process.env.MONGO_CONNECTION_DEV;
+const MONGO_CONNECTION =
+  process.env.NODE_ENV === "production"
+    ? process.env.MONGO_CONNECTION_PROD
+    : process.env.MONGO_CONNECTION_DEV;
 
-const db = mongoose.connect(MONGO_CONNECTION_DEV, {
+const db = mongoose.connect(MONGO_CONNECTION, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

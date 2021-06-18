@@ -10,6 +10,7 @@ const getAllEntries = async (req, res, next) => {
     if (author !== null) {
       searchOptions.author = author;
     }
+
     const { docs: allEntries, ...rest } = await Entry.paginate(searchOptions, {
       limit,
       offset,
@@ -59,6 +60,19 @@ const editEntry = async (req, res, next) => {
     const entryId = req.params.entryId;
     const entryUpdates = req.body;
 
+    const isNotUnique = await Entry.findOne({
+      word: entryUpdates.word,
+      deleted: false,
+    });
+
+    if (isNotUnique) {
+      return res.status(HttpCodes.CONFLICT).json({
+        status: Statuses.error,
+        code: HttpCodes.CONFLICT,
+        message: "This word already exists!",
+      });
+    }
+
     const updatedEntry = await Entry.findOneAndUpdate(
       { _id: entryId, deleted: false },
       { ...entryUpdates },
@@ -88,7 +102,7 @@ const removeEntry = async (req, res, next) => {
     const entryId = req.params.entryId;
 
     const deletedEntry = await Entry.findOneAndUpdate(
-      { _id: entryId },
+      { _id: entryId, deleted: false },
       { ...{ deleted: true } },
       { new: true }
     );
