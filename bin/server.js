@@ -1,7 +1,7 @@
+require("dotenv").config();
 const app = require("../app");
 const db = require("../db/mongo-db");
 const { Port } = require("../helpers/constants");
-require("dotenv").config();
 
 const PORT = process.env.PORT || Port.default;
 
