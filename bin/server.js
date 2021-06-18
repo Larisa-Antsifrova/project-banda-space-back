@@ -1,4 +1,8 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({
+  path: path.join(__dirname, "../env"),
+  debug: process.env.MONGO_CONNECTION_DEV,
+});
 const app = require("../app");
 const db = require("../db/mongo-db");
 const { Port } = require("../helpers/constants");
