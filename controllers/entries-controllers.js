@@ -29,7 +29,10 @@ const addEntry = async (req, res, next) => {
   try {
     const submittedEntry = req.body;
 
-    const isNotUnique = await Entry.findOne({ word: submittedEntry.word });
+    const isNotUnique = await Entry.findOne({
+      word: submittedEntry.word,
+      deleted: false,
+    });
 
     if (isNotUnique) {
       return res.status(HttpCodes.CONFLICT).json({
